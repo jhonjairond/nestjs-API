@@ -18,7 +18,7 @@ export class UserController {
     });
   } 
   
-  @Post('/signin')                              //consultar usuarios por name
+  @Post('/signin')                              //sign in
   async userLogIn(@Res()res, @Body() {name,password}) {
     console.log(name);
     console.log(password);

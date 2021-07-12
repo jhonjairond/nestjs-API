@@ -67,7 +67,10 @@ findAndModify() function instead. You can opt in to using the MongoDB driver's f
     const isMatch = await bcrypt.compare(password, hash);   //verificar contraseña return true o false
     return isMatch;
   }
-  
-  
+  //---------------------------------------------------------------------------------
+  async findOneByEmail(email:string) {
+    return await this.userModel.findOne({email});
+    
+  }
 
 }
