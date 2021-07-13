@@ -81,7 +81,8 @@ findAndModify() function instead. You can opt in to using the MongoDB driver's f
       try {
           @Get()
           let res=await this.axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=${food}`), //hacer req params api_key=DEMO_KEY y query=a consultar
-              json= await res.data;
+          let res=await this.axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search`, { params: { api_key:DEMO_KEY, query:food } }), //hacer req params api_key=DEMO_KEY y query=a consultar    
+          json= await res.data;
           
           //console.log(/*res,*/json);
           //console.log(json.televisores[0].name)
