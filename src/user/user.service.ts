@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable,Get } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model} from 'mongoose';
 import { User } from './interfaces/user.interface';
 import { CreateUserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
+import { AxiosResponse } from 'axios'
 
 
 @Injectable()
 export class UserService {
 
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
+  constructor(@InjectModel('User') private readonly userModel: Model<User>,
+                                    private readonly axiosResponse: AxiosResponse) { }
 
   async getUsers():Promise< User[] > {                   //encontrar todos los usuarios
      const users=await this.userModel.find();
@@ -70,7 +72,41 @@ findAndModify() function instead. You can opt in to using the MongoDB driver's f
   //---------------------------------------------------------------------------------
   async findOneByEmail(email:string) {
     return await this.userModel.findOne({email});
-    
   }
 
-}
+  //--------------------------------------------------------------------------------------------------------------------------------
+  //async foodConsult(food: string) {
+
+    async function foodConsult(food: string): Promise<AxiosResponse> {
+      try {
+          @Get()
+          let res=await this.axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=${food}`),
+              json= await res.data;
+          
+          //console.log(/*res,*/json);
+          //console.log(json.televisores[0].name)
+          
+          console.log(json.foods.length);
+          //console.log(json.foodSearchCriteria);
+          //console.log(json.foods[5]);
+          //console.log(json.foods[0].foodNutrients[0]);
+          //console.log(json.foods[0].foodNutrients[0].nutrientName);
+  
+  
+          //json.foods.forEach((element) => {
+           //   console.log(element);
+          //});
+          return json.foods[0];
+      } catch (error) {
+          console.log(`Error ${error.response}`);
+      } finally {
+          console.log("finally ejecutado");
+      }
+  
+  }
+  
+
+    //return await this.userModel.findOne({$text: {$search: food}});
+  }
+
+

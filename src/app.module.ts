@@ -8,7 +8,12 @@ import { AuthModule } from './auth/auth.module';
 
 
 @Module({
-  imports: [ProductModule, MongooseModule.forRoot('mongodb+srv://admin:1234567890_@cluster0.foawe.mongodb.net/nestjs-API?retryWrites=true'), UserModule, AuthModule],
+  imports: [ProductModule, MongooseModule.forRoot('mongodb+srv://admin:1234567890_@cluster0.foawe.mongodb.net/nestjs-API?retryWrites=true',{
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  },), UserModule, AuthModule,],
   controllers: [AppController],
   providers: [AppService],
 })
