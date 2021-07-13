@@ -80,7 +80,7 @@ findAndModify() function instead. You can opt in to using the MongoDB driver's f
     async function foodConsult(food: string): Promise<AxiosResponse> {
       try {
           @Get()
-          let res=await this.axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=${food}`),
+          let res=await this.axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=${food}`), //hacer req params api_key=DEMO_KEY y query=a consultar
               json= await res.data;
           
           //console.log(/*res,*/json);
